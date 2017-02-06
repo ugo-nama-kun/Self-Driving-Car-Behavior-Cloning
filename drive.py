@@ -54,7 +54,7 @@ def telemetry(sid, data):
     # This model currently assumes that the features of the model are just the images. Feel free to change this.
     steering_angle = np.clip(float(model.predict(transformed_image_array, batch_size=1)), a_min=-1.0, a_max=1.0)
     # The driving model currently just outputs a constant throttle. Feel free to edit this.
-    if speed < 20:
+    if speed < 10:
         throttle = 0.5
     else:
         throttle = 0.2
