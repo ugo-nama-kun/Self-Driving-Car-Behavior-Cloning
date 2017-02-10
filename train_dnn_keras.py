@@ -28,15 +28,16 @@ msk = np.linspace(0,1,len(data_nonzeroy)) < 0.8
 
 # Trainnig data with data augumentation
 Xc_train_info = data_nonzeroXc[msk].as_matrix()
-Xl_train_info = data_nonzeroXl[msk].as_matrix()
-Xr_train_info = data_nonzeroXr[msk].as_matrix()
+Xl_train_info = data_nonzeroXl.as_matrix()
+Xr_train_info = data_nonzeroXr.as_matrix()
 X_train_info = np.concatenate((Xc_train_info,
                                Xl_train_info,
                                Xr_train_info))
-y_train_info = data_nonzeroy[msk].as_matrix()
-y_train_info = np.concatenate((y_train_info,
-                               y_train_info,
-                               y_train_info))
+y_train_info_c = data_nonzeroy[msk].as_matrix()
+y_train_info_lr = data_nonzeroy.as_matrix()
+y_train_info = np.concatenate((y_train_info_c,
+                               y_train_info_lr,
+                               y_train_info_lr))
 
 # Validation Data without data augumentation
 X_val_info = data_nonzeroXc[~msk].as_matrix()
@@ -163,6 +164,5 @@ model.fit_generator(datagen.flow(X_train, y_train, batch_size=BATCH_SIZE, shuffl
                     validation_data=(X_val, y_val),
                     nb_val_samples=len(X_val),
                     callbacks=[cbk, cbk_cp])
-    
-model.save('model.h5')
 
+model.save('model.h5')
